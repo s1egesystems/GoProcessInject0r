@@ -4,12 +4,12 @@ Proof of concept for single/multiple shellcode process injection malware in Go l
 Contains two programs:
 
 Multi: 
-multi-threaded malware to recursively scan and inject multiple processes' space; with little cpu and memory usage
+multi-threaded malware to recursively scan and inject multiple processes' space with little cpu and memory usage
 
 Single: 
 malware to scan for target processes once a target process id is found the program will inject shellcode into target process space and exit
 
-To build:
+Build:
 ```
 admin@local:~$ go get "github.com/TheTitanrain/w32"
 admin@local:~$ set GOARCH=386
