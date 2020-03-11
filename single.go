@@ -39,13 +39,11 @@ func getpid() uint32 {
     for _,proc := range target_procs {
         if w32.EnumProcesses(procs, sz, &bytesReturned) {
             for _, pid := range procs[:int(bytesReturned)/4] {
-                if pid > 0 {
-                    if getprocname(pid) == proc {
-                        return pid
-                    } else {
-                        // sleep to limit cpu usage
-                        time.Sleep(15 * time.Millisecond)
-                    }
+                if getprocname(pid) == proc {
+                    return pid
+                } else {
+                    // sleep to limit cpu usage
+                    time.Sleep(15 * time.Millisecond)
                 }
             }
         }
